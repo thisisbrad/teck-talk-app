@@ -13,7 +13,11 @@ Ensure you have the following installed **and** running:
 #### Build Docker Containers
 We are using docker containers for development purposes. Navigate to the root directory of the project and run:
 ```shell
-docker compose build
+./build.sh
+```
+This will make sure your node_modules are installed for each tech (express and next) and build the containers. If you are not able to run the command due to file permission issues, run the command:
+```shell
+chmod +x build.sh
 ```
 
 #### Running Docker Containers
