@@ -31,6 +31,15 @@ Once you are done with development, to spin down the containers, run:
 docker compose down
 ```
 
+## Project Structure
+
+### Frontend 
+- NextJS - http://localhost
+
+### Backend
+- Express - http://localhost/api_v1
+- MongoDB
+
 ## Contact
 
 For Docker related questions, please contact:
