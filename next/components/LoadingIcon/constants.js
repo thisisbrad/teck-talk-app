@@ -1,0 +1,9 @@
+export const MIN_SIDES = 0;
+export const MAX_SIDES = 11;
+export const RADIUS = 500;
+export const CENTER = [RADIUS, RADIUS];
+export const STEP_SIZE = 0.05;
+export const CIRCLE = Math.PI*2;
+export const FPS = 1e3/32;
+export const CANVAS_WIDTH = 1000;
+export const CANVAS_HEIGHT = 1000;
