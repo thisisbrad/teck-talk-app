@@ -1,6 +1,6 @@
-import ApiError from '../errors/ApiError.js';
 import User from '../models/User.js';
 import { omit } from '../utilities';
+import ApiError from '../errors/ApiError.js';
 
 /*
 # User Controller
