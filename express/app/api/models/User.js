@@ -1,4 +1,4 @@
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { model, Schema } from "mongoose";
 
 
@@ -40,6 +40,12 @@ const UserSchema = new Schema({
 	joinDate: {
 		type: Date,
 		default: new Date()
+	}
+}, {
+	methods: {
+		verifyPassword: async function(password) {
+			return await compare(password, this.password);
+		}
 	}
 });
 
