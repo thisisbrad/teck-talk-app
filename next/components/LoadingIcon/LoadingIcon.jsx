@@ -15,7 +15,7 @@ import { useColor } from "./useColor";
  * @param {StyledComponent<MUIStyledCommonProps<Theme>, DetailedHTMLProps<CanvasHTMLAttributes<HTMLCanvasElement>, HTMLCanvasElement>, {}> & LoadingIconProps} props 
  * @returns 
  */
-const LoadingIcon = ({stroke:stk='currentColor', ...props}) => {
+const LoadingIcon = ({stroke:stk='currentColor', stepSize=STEP_SIZE, ...props}) => {
 	const ref = useRef();
 	
 	const stroke = useColor(stk);
@@ -26,7 +26,7 @@ const LoadingIcon = ({stroke:stk='currentColor', ...props}) => {
 		const ctx = canvas.getContext('2d');
 		let gid;
 		let sides = MIN_SIDES;
-		let dir = STEP_SIZE;
+		let dir = stepSize;
 		let lastTime;
 
 		const center = CENTER

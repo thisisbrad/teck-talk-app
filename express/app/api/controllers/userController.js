@@ -1,5 +1,5 @@
 import User from '../models/User.js';
-import { omit } from '../utilities';
+import { omit } from '../utilities/objects.js';
 import ApiError from '../errors/ApiError.js';
 
 /*
@@ -17,13 +17,17 @@ In order to reduce redundant code these functions will not verify the user is au
  * @param {import('express').NextFunction} next 
  */
 export const createUser = async (request, response, next) => {
+	console.log(request.body);
 	try {
 		const user = await User.create(request.body);
 		response
 		.status(201)
 		.json({message: "Created user", user: omit(user, "password")});
 	} catch (e) {
-		return next(new ApiError("Something went wrong and the database errors havent been documented yet. Please try again later.", 500))
+		if(e.name === "ValidationError"){
+			return next(ApiError.fromError(400, e));
+		}
+		return next(ApiError.fromError(500, e));
 	}
 	
 
@@ -62,7 +66,7 @@ export const readUser = async (request, response, next) => {
  */
 export const readAllUsers = async (request, response, next) => {
 	try{
-		const users = await User.find('-password');
+		const users = await User.find({}, '-password');
 		return response
 		.status(200)
 		.json(users);
@@ -112,3 +116,17 @@ export const deleteUser = async (request, response, next) => {
 		return next(ApiError.fromError(500, e));
 	}
 };
+
+/*
+These are series of convenience endpoints
+*/
+
+export const checkUsername = async (request, response, next) => {
+	const { username } = request.params;
+	try {
+		const user = await User.findOne({_username: username.toLowerCase()});
+		response.status(200).json({exists: !!user});
+	} catch (e) {
+		return next(ApiError.fromError(500, e))
+	}
+}
