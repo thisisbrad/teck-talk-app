@@ -43,7 +43,7 @@ Unfortunately type merging doesnt work to well so static types it is
  * @property {string} firstName
  * @property {string} lastName
  * @property {number} role
- * @property {Date} dateJoined
+ * @property {string} dateJoined
  */
 
 /**

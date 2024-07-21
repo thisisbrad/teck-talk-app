@@ -45,7 +45,7 @@ router.get("/:id", authorizer(ADMIN_ROLE), readUser);
  * @tags Users v1
  * @security UserAuth
  * @param {string} id.path.required
- * @param {User} req.body.required
+ * @param {User} request.body.requred - The user to be saved
  * @return {User} 200 - The user was updated
  * @return {ErrorMessage} 404 - User Not Found
  * @return {ErrorMessage} 422 - Validation Error

@@ -6,6 +6,7 @@ swagger(app)({
 	info: {
 		title: "Tech Talk Api",
 		version: "1.0.0",
+		description: "A slice of the internet for Fullsail students to brainstorm."
 	},
 	baseDir: "./app/api/routes",
 	swaggerUIPath: "/",

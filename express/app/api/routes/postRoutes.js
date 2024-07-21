@@ -5,10 +5,10 @@ const postRouter = express.Router();
 
 /**
  * POST /api_v1/posts
- * @summary Create a post
+ * @summary Create a post - Must be signed in
  * @tags Posts v1
  * @security UserAuth
- * @param {NewPost} req.body.required
+ * @param {NewPost} request.body.required
  * @return {Post} 200 - The saved post
  * @return {ErrorMessage} 400 - Input Error
  */
