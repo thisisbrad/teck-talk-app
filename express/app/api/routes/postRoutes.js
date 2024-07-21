@@ -5,8 +5,8 @@ const postRouter = express.Router();
 
 /**
  * POST /api_v1/posts
- * @summary Create a post - Must be signed in
- * @tags Posts v1
+ * @summary Create a post
+ * @tags Posts v1 - Must be signed in
  * @security UserAuth
  * @param {NewPost} request.body.required
  * @return {Post} 200 - The saved post
