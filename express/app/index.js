@@ -10,6 +10,7 @@ import "./db/config.js";
 import MongoDBSession from "connect-mongodb-session";
 import session from "express-session";
 import "./api/strategies/local.js";
+import passport from "passport";
 
 const MongoDBStore = MongoDBSession(session);
 const app = express();
@@ -37,9 +38,13 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use("/api_v1/posts", postRouter);
 app.use("/api_v1/users", userRouter);
-app.use("/api_v1/auth", authRouter)
+app.use("/api_v1/auth", authRouter);
+
 app.get("/api_v1", async (req, res) => {
   res.status(200).json("Server is up");
 });
