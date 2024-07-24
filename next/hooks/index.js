@@ -1,0 +1,1 @@
+export { default as useAnchorElement } from './useAnchorElement';
