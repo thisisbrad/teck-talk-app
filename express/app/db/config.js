@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const url = "mongodb://mongodb:27017/techTalk";
+const url = process.env.mongoUri ?? "mongodb://mongodb:27017/techTalk";
 
 mongoose
   .connect(url)
