@@ -8,7 +8,7 @@
     "start": "node --env-file=.env server.js",
     "dev": "nodemon --env-file=.env server.js ",
     "docker-dev": "rm -rf node_modules && npm install && npm run dev",
-    "lint": "eslint --fix"
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
