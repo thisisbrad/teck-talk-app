@@ -124,7 +124,7 @@ export const checkUsername = async (request, response, next) => {
 	const { username } = request.params;
 	try {
 		const user = await User.findOne({_username: username.toLowerCase()});
-		response.status(200).json({exists: !!user});
+		response.status(200).json(!user);
 	} catch (e) {
 		return next(ApiError.fromError(500, e))
 	}

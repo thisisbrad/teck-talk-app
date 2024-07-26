@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 //import "./globals.css";
 import { Themer } from "@/components";
 import './animations.css';
+import { Authentication } from "@/contexts";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div id="root"><Themer>{children}</Themer></div>
+        <div id="root">
+          <Authentication>
+            <Themer>{children}</Themer>
+          </Authentication>
+        </div>
       </body>
     </html>
   );

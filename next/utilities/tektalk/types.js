@@ -62,4 +62,3 @@ Unfortunately type merging doesnt work to well so static types it is
  * @property {string} [description]
  * @property {number} [voteCount]
  */
-

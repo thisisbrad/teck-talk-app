@@ -2,8 +2,18 @@ import { Router } from "express";
 import passport from "passport";
 import { signUp, signOut, signedIn, info } from "../controllers/authController.js";
 import { authorized } from "../middleware/authorizer.js";
+import { checkUsername } from "../controllers/userController.js";
 
 const router = Router();
+/**
+ * GET /api_v1/users/username/{username}
+ * @summary Checks if a username is available for use
+ * @tags Users v1 - No Login necessary
+ * @param {string} username.path.required - The desired username
+ * @return {boolean} 200 - A response stating if the username is available for use
+ * @return {ErrorMessage} 500 - Internal Server Error
+ */
+router.get("/:username", checkUsername);
 
 /**
  * GET /api_v1/auth
@@ -45,5 +55,7 @@ router.post('/signup', signUp);
  * @return {ErrorMessage} 500 - Internal Server Error
  */
 router.post('/signout', authorized, signOut);
+
+
 
 export default router;

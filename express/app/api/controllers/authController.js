@@ -38,11 +38,11 @@ export const signOut = async (request, response, next) => {
 }
 
 //eslint-disable-next-line no-unused-vars
-export const signedIn = ({user:{username, firstName, lastName}}, response) => {
+export const signedIn = ({user:{firstName, lastName, username, role}}, response) => {
 	//this will only occur if a authentication exists.
 	return response
 	.status(200)
-	.json({username, firstName, lastName});
+	.json({firstName, lastName, username, role});
 }
 
 export const info = ({user}, res) => user 
