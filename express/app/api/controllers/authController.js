@@ -10,14 +10,19 @@ import User from "../models/User.js"
 export const signUp = async (request, response, next) => {
 	try{
 		const user = await User.create(request.body);
-		console.log(user, request);
 		return request.login(user, err=>{
 			if(err) throw err; //just pass it up to the catch
-			return next();
+			return response
+			.status(201)
+			.json({
+				username:user.username, 
+				firstName:user.firstName, 
+				lastName: user.lastName
+			});
 		});
 	} catch (e) {
-		console.log(e);
-		return next(ApiError.fromError(400, e));
+		if(e.name === "ValidationError") return next(ApiError.fromError(422, e));
+		return next(ApiError.fromError(500, e));
 	}
 }
 
@@ -33,13 +38,17 @@ export const signOut = async (request, response, next) => {
 }
 
 //eslint-disable-next-line no-unused-vars
-export const signIn = (request, response, next) => {
-	console.log("Signing in", request.user)
-	response.status(203).send();
+export const signedIn = ({user:{firstName, lastName, username, role}}, response) => {
+	//this will only occur if a authentication exists.
+	return response
+	.status(200)
+	.json({firstName, lastName, username, role});
 }
 
-//eslint-disable-next-line no-unused-vars
-export const signInFailure = (error, request, response, next) => {
-	console.log("Sign In Failed");
-	response.status(203).send();
-}
+export const info = ({user}, res) => user 
+? res
+.status(200)
+.json(user)
+: res
+.status(204)
+.send();

@@ -9,7 +9,7 @@ const PassField = props => {
 		type: showPass ? 'text':'password',
 		InputProps: {
 			endAdornment: <InputAdornment position="end">
-				<IconButton onClick={toggle}>
+				<IconButton onClick={toggle} tabIndex={-1}>
 					{showPass ? <VisibilityOff/>:<Visibility/>}
 				</IconButton>
 			</InputAdornment>

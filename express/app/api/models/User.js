@@ -33,13 +33,20 @@ const UserSchema = new Schema({
 		type: String,
 		required: [true, "A last name must be provided"]
 	},
+	/*
+	With a simplified role system using numbers is better for evaluating permissions later.
+
+	user = 0
+	moderator = 1
+	admin = 2
+	*/
 	role: {
-		type: String,
+		type: Number,
 		enum: {
-			values: ["admin", "moderator", "user"],
+			values: [0, 1, 2],
 			message: `{VALUE} is not supported`
 		},
-		default: "user"
+		default: 0
 	},
 	joinDate: {
 		type: Date,

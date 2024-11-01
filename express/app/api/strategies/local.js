@@ -16,6 +16,11 @@ passport.use(new LocalStrategy(async (username, password, done)=>{
 	}
 }));
 
-passport.serializeUser(({id, username}, cb)=>process.nextTick(()=>cb(null, {id, username})));
+passport.serializeUser(({id, username, firstName, lastName, role}, cb)=>process.nextTick(()=>{
+	cb(null, {id, username, firstName, lastName, role})
+}));
 
-passport.deserializeUser((user, cb)=>process.nextTick(()=>cb(null, user)));
+passport.deserializeUser(async ({id}, cb)=>{
+	const user = await User.findById(id, 'username firstName lastName role');
+	cb(null, user)
+});

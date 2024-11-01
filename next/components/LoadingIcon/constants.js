@@ -7,3 +7,4 @@ export const CIRCLE = Math.PI*2;
 export const FPS = 1e3/32;
 export const CANVAS_WIDTH = 1000;
 export const CANVAS_HEIGHT = 1000;
+export const STROKE_WIDTH = 10;

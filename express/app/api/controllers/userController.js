@@ -24,9 +24,7 @@ export const createUser = async (request, response, next) => {
 		.status(201)
 		.json({message: "Created user", user: omit(user, "password")});
 	} catch (e) {
-		if(e.name === "ValidationError"){
-			return next(ApiError.fromError(400, e));
-		}
+		if(e.name === "ValidationError") return next(ApiError.fromError(422, e));
 		return next(ApiError.fromError(500, e));
 	}
 	
@@ -65,6 +63,7 @@ export const readUser = async (request, response, next) => {
  * @param {import('express').NextFunction} next 
  */
 export const readAllUsers = async (request, response, next) => {
+	console.log(request.login)
 	try{
 		const users = await User.find({}, '-password');
 		return response
@@ -125,7 +124,7 @@ export const checkUsername = async (request, response, next) => {
 	const { username } = request.params;
 	try {
 		const user = await User.findOne({_username: username.toLowerCase()});
-		response.status(200).json({exists: !!user});
+		response.status(200).json(!user);
 	} catch (e) {
 		return next(ApiError.fromError(500, e))
 	}

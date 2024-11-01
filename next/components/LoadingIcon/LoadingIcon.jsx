@@ -1,13 +1,17 @@
 'use client';
 import { useEffect, useRef } from "react";
 import { Canvas } from "./Canvas";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, CENTER, CIRCLE, FPS, MAX_SIDES, MIN_SIDES, RADIUS, STEP_SIZE } from "./constants";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, CENTER, CIRCLE, FPS, MAX_SIDES, MIN_SIDES, RADIUS, STEP_SIZE, STROKE_WIDTH } from "./constants";
 import { useColor } from "./useColor";
 
 /**
  * While the LoadingIconProps supports an property an mui styled component accepts as well has HTMLCanvasElement Properties the following properties are provided special support to improve the usabaility of the component.
  * @typedef {object} LoadingIconProps
  * @property {string} stroke - This can be any supported color type or using mui's color notation to traverse the palette
+ * @property {number} strokeWidth
+ * @property {number} stepSize - How big of a step should be made each frame
+ * @property {number} maxSides - How many sides should be the end.
+ * @property {number} minSides - How many sides should be the start
  */
 
 /**
@@ -15,7 +19,7 @@ import { useColor } from "./useColor";
  * @param {StyledComponent<MUIStyledCommonProps<Theme>, DetailedHTMLProps<CanvasHTMLAttributes<HTMLCanvasElement>, HTMLCanvasElement>, {}> & LoadingIconProps} props 
  * @returns 
  */
-const LoadingIcon = ({stroke:stk='currentColor', stepSize=STEP_SIZE, ...props}) => {
+const LoadingIcon = ({stroke:stk='currentColor', stepSize=STEP_SIZE, maxSides=MAX_SIDES, minSides=MIN_SIDES, strokeWidth=STROKE_WIDTH, ...props}) => {
 	const ref = useRef();
 	
 	const stroke = useColor(stk);
@@ -25,7 +29,7 @@ const LoadingIcon = ({stroke:stk='currentColor', stepSize=STEP_SIZE, ...props}) 
 		const styles = window.getComputedStyle(canvas);
 		const ctx = canvas.getContext('2d');
 		let gid;
-		let sides = MIN_SIDES;
+		let sides = minSides;
 		let dir = stepSize;
 		let lastTime;
 
@@ -40,8 +44,9 @@ const LoadingIcon = ({stroke:stk='currentColor', stepSize=STEP_SIZE, ...props}) 
 			if(isNaN(delta)|| delta >= FPS){
 				lastTime = time;
 				sides += dir;
-				if(sides >= MAX_SIDES || sides <= MIN_SIDES) dir *= -1;
+				if(sides >= maxSides || sides <= minSides) dir *= -1;
 				ctx.clearRect(0, 0, 1000, 1000);
+				ctx.lineWidth = strokeWidth
 				const s = stroke === 'currentColor' ? styles.color:stroke;
 				renderFrame(ctx, sides, s, radius, center);
 			}
@@ -50,7 +55,7 @@ const LoadingIcon = ({stroke:stk='currentColor', stepSize=STEP_SIZE, ...props}) 
 
 		render();
 		return () => window.cancelAnimationFrame(gid);
-	}, [stroke])
+	}, [stroke, minSides])
 	return <Canvas {...{...props, ref}}/>
 }
 
@@ -82,7 +87,6 @@ const renderFrame = (ctx, sides, color, radius, center) => {
 	let corners = [];
 	
 	ctx.strokeStyle = color;
-	ctx.lineWidth = 10;
 	ctx.lineCap = 'round'
 	ctx.beginPath();
 	for (let i = 0; i<fsides; i++){
